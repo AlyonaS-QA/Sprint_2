@@ -3,19 +3,21 @@ class EmployeeSalary:
 
     def __init__(self, name, hours, rest_days, email):
         self.name = name
-        self.hours = EmployeeSalary.get_hours(hours,rest_days)
+        self.hours = EmployeeSalary.get_hours(name, hours, rest_days, email)
         self.rest_days = rest_days
-        self.email = EmployeeSalary.get_email(name,email)
+        self.email = EmployeeSalary.get_email(name, hours, rest_days, email)
 
-    def get_hours(hours,rest_days):
+    @classmethod
+    def get_hours(cls,name, hours, rest_days, email):
         if not hours:
             hours = (7 - rest_days) * 8
-        return hours
+        return cls(name, hours, rest_days, email)
 
-    def get_email(name,email):
+    @classmethod
+    def get_email(cls,name, hours, rest_days, email):
         if not email:
             email = f"{name}@email.com"
-        return email
+        return cls(name, hours, rest_days, email)
 
     @classmethod
     def set_hourly_payment(cls, new_payment):
